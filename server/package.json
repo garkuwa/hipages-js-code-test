@@ -24,9 +24,12 @@
         "@nestjs/common": "^8.0.0",
         "@nestjs/core": "^8.0.0",
         "@nestjs/platform-express": "^8.0.0",
+        "@nestjs/typeorm": "^8.0.1",
+        "mysql2": "^2.2.5",
         "reflect-metadata": "^0.1.13",
         "rimraf": "^3.0.2",
-        "rxjs": "^7.2.0"
+        "rxjs": "^7.2.0",
+        "typeorm": "^0.2.34"
     },
     "devDependencies": {
         "@nestjs/cli": "^8.0.0",
@@ -41,8 +44,8 @@
         "eslint": "7.7.0",
         "eslint-config-prettier": "^8.3.0",
         "eslint-plugin-import": "^2.22.0",
-        "eslint-plugin-unicorn": "^28.0.2",
         "eslint-plugin-prettier": "^3.4.0",
+        "eslint-plugin-unicorn": "^28.0.2",
         "jest": "27.0.6",
         "prettier": "^2.3.2",
         "supertest": "^6.1.3",
