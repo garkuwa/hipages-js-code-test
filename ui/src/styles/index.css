@@ -1,0 +1,38 @@
+@font-face {
+    font-family: 'Inter-Regular';
+    src: url('styles/fonts/Inter-Regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Inter-Medium';
+    src: url('styles/fonts/Inter-Medium.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Inter-SemiBold';
+    src: url('styles/fonts/Inter-SemiBold.woff2') format('woff2');
+}
+
+:root {
+    --font-family-regular: Inter-Regular;
+    --font-family-medium: Inter-Medium;
+    --font-family-semi-bold: Inter-SemiBold;
+
+    --font-size-extra-small: 0.75rem;
+    --font-size-small: 0.875rem;
+    --font-size-small: 0.875rem;
+    --font-size-medium: 1.125rem;
+
+    --color-body: #e5e5e5;
+    --color-card: #ffffff;
+    --color-active-control: #fe7d2b;
+    --color-secondary-control: #eeeeee;
+    --color-primary-text: #333333;
+    --color-text-secondary: #5c5c5c;
+}
+
+body {
+    font-family: var(--font-family-primary);
+    font-size: 100%;
+    background-color: var(--color-body);
+}

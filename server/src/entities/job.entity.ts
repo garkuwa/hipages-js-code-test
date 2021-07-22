@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn, AfterLoad } from 'typeorm';
 import { Category } from './category.entity';
 import { Suburb } from './suburb.entity';
 
@@ -10,22 +10,13 @@ export class Job {
     @Column()
     status: string;
 
-    @OneToOne(() => Suburb)
+    @OneToOne(() => Suburb, { eager: true })
     @JoinColumn({ name: 'suburb_id' })
-    suburb: Suburb;
+    suburb: Suburb | string;
 
-    @OneToOne(() => Category)
+    @OneToOne(() => Category, { eager: true })
     @JoinColumn({ name: 'category_id' })
-    category: Category;
-
-    @Column({ name: 'contact_name' })
-    fullName: string;
-
-    @Column({ name: 'contact_phone' })
-    phoneNumber: string;
-
-    @Column({ name: 'contact_email' })
-    email: string;
+    category: Category | string;
 
     @Column()
     price: string;
@@ -35,4 +26,19 @@ export class Job {
 
     @Column({ name: 'created_at' })
     createdAt: Date;
+
+    /**
+     * Front-end at the moment is not interested in suburb_id and category_id,
+     * so there is no reason to include these fields in a response and have a nested structure.
+     * It seems typeorm doesn't provide a more elegant way to configure join columns
+     * or calculate these fields without using a query builder
+     */
+    @AfterLoad()
+    setJoinedFields() {
+        const suburbName = (this.suburb as Suburb).name;
+        const categoryName = (this.category as Category).name;
+
+        if (suburbName) this.suburb = suburbName;
+        if (categoryName) this.category = categoryName;
+    }
 }

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JobModule } from './jobs';
-import { Category, Job, Suburb } from './entities';
+import { AcceptedJob, Category, Job, NewJob, Suburb } from './entities';
 
 @Module({
     imports: [
@@ -12,7 +12,7 @@ import { Category, Job, Suburb } from './entities';
             username: 'root',
             password: 'hipages',
             database: 'hipages',
-            entities: [Category, Job, Suburb],
+            entities: [Category, Suburb, Job, NewJob, AcceptedJob],
         }),
         JobModule,
     ],
