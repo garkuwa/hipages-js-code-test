@@ -34,7 +34,7 @@ export class Job {
      * or calculate these fields without using a query builder
      */
     @AfterLoad()
-    setJoinedFields() {
+    setJoinedFields(): void {
         const suburbName = (this.suburb as Suburb).name;
         const categoryName = (this.category as Category).name;
 

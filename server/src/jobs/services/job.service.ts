@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { NewJob } from 'src/entities/newJob.entity';
 import { Repository, UpdateResult } from 'typeorm';
 import { AcceptedJob, Job } from '../../entities';
-import { JobStatus } from '../models';
+import { JobStatus } from 'src/models';
 
 @Injectable()
 export class JobService {

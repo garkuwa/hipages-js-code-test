@@ -1,15 +1,15 @@
 import { JobStatus } from 'types';
 import { APP_API_ENDPOINT } from 'config';
 
-const handleError = (response: Response) => {
-    const errorMsg = (response.json() as any).message;
-    throw new Error(errorMsg || 'Error getting data');
+const handleError = async (response: Response) => {
+    const res = await response.json();
+    throw new Error(res.message || 'Error getting data');
 };
 
 export const getJobs = (status: JobStatus) => async () => {
     const response = await fetch(`${APP_API_ENDPOINT}/jobs/${status}`);
     if (!response.ok) {
-        handleError(response);
+        return handleError(response);
     }
 
     return response.json();
@@ -28,7 +28,7 @@ export const updateJobStatus = async (jobId: number, newStatus: JobStatus) => {
     });
 
     if (!response.ok) {
-        handleError(response);
+        return handleError(response);
     }
 
     return response.json();

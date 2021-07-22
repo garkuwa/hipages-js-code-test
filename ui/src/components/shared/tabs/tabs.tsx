@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import { Children, ReactElement, useState } from 'react';
+import { useEffect, Children, ReactElement, useState } from 'react';
 import { TabButtonContainerDiv, TabButtonDiv, TabContainerDiv, TabDiv } from './styled';
 
 export interface ITabsProps {
@@ -56,6 +55,7 @@ export default function Tabs({
     );
 }
 
+// eslint-disable-next-line func-names
 Tabs.Tab = function ({ children }: ITabProps) {
     return <TabDiv>{children}</TabDiv>;
 };

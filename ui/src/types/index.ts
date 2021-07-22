@@ -21,3 +21,10 @@ export enum JobStatus {
     ACCEPTED = 'accepted',
     DECLINED = 'declined',
 }
+
+export interface IServerErrorResponse {
+    statusCode: number;
+    message: string;
+    timestamp: string;
+    path: string;
+}

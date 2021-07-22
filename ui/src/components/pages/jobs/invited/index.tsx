@@ -1,15 +1,36 @@
 import JobCard from 'components/shared/jobCard';
+import { GENERIC_ERROR_MESSAGE, GENERIC_SUCCESS_MESSAGE } from 'config';
+import { useEffect } from 'react';
 import { useMutation, useQuery } from 'react-query';
 import { getJobs, updateJobStatus } from 'requests';
 import { DataRequestName, IJob, JobStatus } from 'types';
 
-export default function InvitedJobsContainer() {
-    const { isLoading, data, refetch } = useQuery<IJob[], Error>(
-        DataRequestName.INVITED_JOBS,
-        getJobs(JobStatus.INVITED),
-    );
-    const { mutate } = useMutation<any, Error, { jobId: number; status: JobStatus }>(
-        ({ jobId, status }) => updateJobStatus(jobId, status),
+interface IInvitedJobsContainerProps {
+    setIsLoadingState: (val: boolean) => void;
+    setSnackbarMessage: (val: string) => void;
+}
+
+export default function InvitedJobsContainer({
+    setIsLoadingState,
+    setSnackbarMessage,
+}: IInvitedJobsContainerProps) {
+    const {
+        isLoading: isFetchingData,
+        data,
+        isError: hasDataFetchingFailed,
+        error: dataFetchingError,
+        refetch,
+    } = useQuery<IJob[], Error>(DataRequestName.INVITED_JOBS, getJobs(JobStatus.INVITED), {
+        refetchOnWindowFocus: false,
+    });
+    const {
+        mutate,
+        isLoading: isUpdatingData,
+        isSuccess: hasUpdateSucceeded,
+        isError: hasUpdateFailed,
+        error: updateError,
+    } = useMutation<unknown, Error, { jobId: number; status: JobStatus }>(({ jobId, status }) =>
+        updateJobStatus(jobId, status),
     );
     const acceptJob = (jobId: number) =>
         mutate({
@@ -17,7 +38,7 @@ export default function InvitedJobsContainer() {
             status: JobStatus.ACCEPTED,
         });
     const declineJob = (jobId: number) => {
-        if (confirm(`Are you sure you want to decline the JOB with ID ${jobId}`)) {
+        if (globalThis.confirm(`Are you sure you want to decline the JOB with ID ${jobId}`)) {
             mutate({
                 jobId,
                 status: JobStatus.DECLINED,
@@ -25,8 +46,21 @@ export default function InvitedJobsContainer() {
         }
     };
 
+    useEffect(() => {
+        setIsLoadingState(isFetchingData || isUpdatingData);
+    }, [isFetchingData, isUpdatingData]);
+
+    useEffect(() => {
+        if (hasUpdateSucceeded) {
+            setSnackbarMessage(GENERIC_SUCCESS_MESSAGE);
+            refetch();
+        } else if (hasDataFetchingFailed)
+            setSnackbarMessage(dataFetchingError?.message || GENERIC_ERROR_MESSAGE);
+        else if (hasUpdateFailed) setSnackbarMessage(updateError?.message || GENERIC_ERROR_MESSAGE);
+    }, [hasDataFetchingFailed, hasUpdateSucceeded, hasUpdateFailed]);
+
     return (
-        <div>
+        <>
             {data?.map(job => (
                 <JobCard
                     onAccept={() => acceptJob(job.id)}
@@ -35,6 +69,7 @@ export default function InvitedJobsContainer() {
                     job={job}
                 />
             ))}
-        </div>
+            {data?.length === 0 && <div>No data to show</div>}
+        </>
     );
 }

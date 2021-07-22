@@ -3,3 +3,7 @@ export const enum JobStatus {
     ACCEPTED = 'accepted',
     DECLINED = 'declined',
 }
+
+export interface IErrorResponse {
+    message: string;
+}

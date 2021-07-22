@@ -7,9 +7,9 @@ import {
     ParseIntPipe,
     Put,
 } from '@nestjs/common';
-import { JobService } from '../services';
+import { JobService } from '../services/job.service';
 import { Job } from '../../entities';
-import { JobStatus } from '../models';
+import { JobStatus } from 'src/models';
 import { UpdateResult } from 'typeorm';
 
 @Controller('jobs')
@@ -35,14 +35,16 @@ export class CategoryController {
 
     @Put('accept/:id')
     acceptJob(
-        @Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE })) id,
+        @Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }))
+        id: number,
     ): Promise<UpdateResult> {
         return this.jobService.updateJobStatus(id, JobStatus.ACCEPTED);
     }
 
     @Put('decline/:id')
     declineJob(
-        @Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE })) id,
+        @Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }))
+        id: number,
     ): Promise<UpdateResult> {
         return this.jobService.updateJobStatus(id, JobStatus.DECLINED);
     }

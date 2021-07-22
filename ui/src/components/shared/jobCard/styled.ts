@@ -7,18 +7,21 @@ export enum ButtonType {
 }
 
 export const JobContainerDiv = styled.div`
-    width: 100%;
-    max-width: 800px;
-    display: flex;
-    flex-direction: column;
-    justify-content: stretch;
     align-items: stretch;
     background-color: var(--color-card);
-    padding: 18px 18px 0 18px;
+    border-radius: 2px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.17);
     box-sizing: border-box;
-    font-size: var(--font-size-small);
-    font-family: var(--font-family-regular);
     color: var(--color-text-secondary);
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-family-regular);
+    font-size: var(--font-size-small);
+    justify-content: stretch;
+    margin-bottom: 20px;
+    max-width: 800px;
+    padding: 10px 18px 0 18px;
+    width: 100%;
 
     @media (max-width: 600px) {
         padding: 5px 5px 0 5px;
@@ -31,12 +34,8 @@ export const JobRowDiv = styled.div`
     justify-content: flex-start;
     align-items: center;
     box-sizing: border-box;
-    padding: 10px;
+    padding: 15px 0;
     flex-wrap: wrap;
-
-    > div {
-        margin-right: 10px;
-    }
 `;
 
 export const JobGeneralInfoDiv = styled.div`
@@ -71,19 +70,19 @@ export const JobCreatedAtDiv = styled.div`
 
 export const JobLocationDiv = styled.div`
     display: flex;
-    justify-content: center;
-    align-items: center;
+    margin-right: 20px;
 `;
 
 export const JobCategoryDiv = styled.div`
+    align-items: center;
     display: flex;
     justify-content: center;
-    align-items: center;
+    margin-right: 20px;
 `;
 
 export const JobIdDiv = styled.div`
-    display: flex;
     color: #c4c4c4;
+    display: flex;
 
     > div {
         color: var(--color-text-secondary);
@@ -91,19 +90,18 @@ export const JobIdDiv = styled.div`
     }
 `;
 
-export const JobPriceDiv = styled.div`
+export const JobPriceDiv = styled.div<{ isAccepted: boolean }>`
     display: flex;
-    color: #555555;
-    font-family: var(--font-family-medium);
+    margin-left: 20px;
 
     > div {
-        color: #5c5c5c;
-        margin-left: 5px;
-        font-family: var(--font-family-regular);
+        color: var(--color-text-secondary);
+        margin-right: 5px;
+        ${props => !props.isAccepted && 'font-family: var(--font-family-semi-bold);'};
     }
 
-    @media (max-width: 375px) {
-        margin-top: 5px;
+    @media (max-width: 600px) {
+        margin: 10px 0 0 0;
     }
 `;
 
@@ -111,6 +109,8 @@ export const JobPhoneDiv = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-right: 20px;
+    color: var(--color-active-control);
 `;
 
 export const JobEmailDiv = styled.div`
@@ -120,15 +120,19 @@ export const JobEmailDiv = styled.div`
 `;
 
 export const JobDescriptionDiv = styled.div`
-    display: -webkit-box;
-    overflow: hidden;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
+    display: inline;
     font-size: var(--font-size-extra-small);
-`;
 
-export const JobBtnControlDiv = styled.div`
-    display: flex;
+    button {
+        border: 0;
+        background: white;
+        cursor: pointer;
+        color: var(--color-active-control);
+
+        &:before {
+            content: '...';
+        }
+    }
 `;
 
 export const JobActionButton = styled.button`
@@ -138,23 +142,6 @@ export const JobActionButton = styled.button`
     margin-right: 20px;
     font-family: var(--font-family-semi-bold);
     cursor: pointer;
-
-    &:hover {
-        transform: translateY(-0.1rem);
-        box-shadow: 0.2rem 0.2rem 0.5rem rgb(0 0 0 / 20%);
-    }
-
-    &.${ButtonType.PRIMARY} {
-        color: white;
-        background-color: var(--color-active-control);
-        border-bottom: #cb6422 2px solid;
-    }
-
-    &.${ButtonType.SECONDARY} {
-        color: #555555;
-        background-color: var(--color-secondary-control);
-        border-bottom: #bebebe, 2px solid;
-    }
 `;
 
 export const IconDiv = styled.div<{ icon: string }>`
@@ -162,6 +149,12 @@ export const IconDiv = styled.div<{ icon: string }>`
     height: 20px;
     width: 25px;
     margin: auto 0;
-    background-position: center;
-    background: no-repeat ${props => `url(${APP_PUBLIC_URL}/icons/${props.icon}.svg)`};
+    background: center no-repeat ${props => `url(${APP_PUBLIC_URL}/icons/${props.icon}.svg)`};
+`;
+
+export const JobContactBlockDiv = styled.div`
+    align-items: center;
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 15px;
 `;

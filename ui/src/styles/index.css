@@ -20,7 +20,6 @@
 
     --font-size-extra-small: 0.75rem;
     --font-size-small: 0.875rem;
-    --font-size-small: 0.875rem;
     --font-size-medium: 1.125rem;
 
     --color-body: #e5e5e5;
@@ -32,7 +31,61 @@
 }
 
 body {
-    font-family: var(--font-family-primary);
+    font-family: var(--font-family-regular);
     font-size: 100%;
     background-color: var(--color-body);
+}
+
+a {
+    color: var(--color-active-control);
+    text-decoration: none;
+}
+
+.primaryBtn {
+    color: white;
+    background-color: var(--color-active-control);
+    border-bottom: #cb6422 2px solid;
+}
+
+.secondaryBtn {
+    color: #555555;
+    background-color: var(--color-secondary-control);
+    border-bottom: #bebebe 2px solid;
+}
+
+.primaryBtn:hover,
+.secondaryBtn:hover {
+    transform: translateY(-0.1rem);
+    box-shadow: 0.2rem 0.2rem 0.5rem rgb(0 0 0 / 20%);
+}
+
+.loader {
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #fea04d;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+.loader-mask {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-body);
+    opacity: 0.8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }

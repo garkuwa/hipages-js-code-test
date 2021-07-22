@@ -1,19 +1,41 @@
 import JobCard from 'components/shared/jobCard';
+import { GENERIC_ERROR_MESSAGE } from 'config';
+import { useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { getJobs } from 'requests';
 import { DataRequestName, IJob, JobStatus } from 'types';
 
-export default function AcceptedJobsContainer() {
-    const { isLoading, data, refetch } = useQuery<IJob[], Error>(
+interface AcceptedJobsContainerProps {
+    setIsLoadingState: (val: boolean) => void;
+    setSnackbarMessage: (val: string) => void;
+}
+
+export default function AcceptedJobsContainer({
+    setIsLoadingState,
+    setSnackbarMessage,
+}: AcceptedJobsContainerProps) {
+    const { isLoading, data, isError, error } = useQuery<IJob[], Error>(
         DataRequestName.ACCEPTED_JOBS,
         getJobs(JobStatus.ACCEPTED),
+        {
+            refetchOnWindowFocus: false,
+        },
     );
 
+    useEffect(() => {
+        setIsLoadingState(isLoading);
+    }, [isLoading]);
+
+    useEffect(() => {
+        if (isError) setSnackbarMessage(error?.message || GENERIC_ERROR_MESSAGE);
+    }, [isError]);
+
     return (
-        <div>
+        <>
             {data?.map(job => (
                 <JobCard key={job.id} job={job} />
             ))}
-        </div>
+            {data?.length === 0 && <div>No data to show</div>}
+        </>
     );
 }

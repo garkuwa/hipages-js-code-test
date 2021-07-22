@@ -28,8 +28,9 @@ module.exports = {
         '@typescript-eslint/no-unused-expressions': ['error', { allowShortCircuit: true }],
         'max-classes-per-file': 'off',
         'class-methods-use-this': 'off',
-        "no-unused-vars": "off",
-        "@typescript-eslint/no-unused-vars": ["error"],
+        'no-unused-vars': 'off',
+        '@typescript-eslint/no-unused-vars': ['error'],
+        '@typescript-eslint/no-var-requires': 0,
         'unicorn/filename-case': [
             'error',
             {

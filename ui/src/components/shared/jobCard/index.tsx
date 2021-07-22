@@ -1,4 +1,7 @@
+import { JOB_DESCRIPTION_DISPLAY_LENGTH_LIMIT } from 'config';
+import { useEffect, useState } from 'react';
 import { IJob, JobStatus } from 'types';
+import { formatDate } from 'utils';
 import {
     JobPriceDiv,
     JobContainerDiv,
@@ -12,11 +15,11 @@ import {
     JobPhoneDiv,
     JobEmailDiv,
     JobDescriptionDiv,
-    JobBtnControlDiv,
     JobActionButton,
     JobGeneralInfoDiv,
     IconDiv,
     ButtonType,
+    JobContactBlockDiv,
 } from './styled';
 
 interface IJobCardProps {
@@ -25,20 +28,33 @@ interface IJobCardProps {
     onDecline?: () => void;
 }
 
-const formatDate = (input: string) => {
-    const date = new Date(input);
-    const month = date.toLocaleString('en-au', { month: 'long', day: 'numeric' });
-    const time = date.toLocaleString('en-au', { hour: 'numeric', minute: 'numeric', hour12: true });
-
-    return `${month} @ ${time}`;
-};
+enum DescriptionBlockStatus {
+    COLLAPSED,
+    EXPANDED,
+}
 
 export default function JobCard({ job, onAccept, onDecline }: IJobCardProps) {
     const jobPriceDiv = (
-        <JobPriceDiv>
-            ${job.price} <div>Lead Invitation</div>
+        <JobPriceDiv isAccepted={job.status === JobStatus.ACCEPTED}>
+            <div>${job.price}</div> Lead Invitation
         </JobPriceDiv>
     );
+    const shouldDescriptionBeCut = job.description.length > JOB_DESCRIPTION_DISPLAY_LENGTH_LIMIT;
+    const [descriptionBlockStatus, setDescriptionBlockStatus] = useState<DescriptionBlockStatus>(
+        DescriptionBlockStatus.COLLAPSED,
+    );
+    const [jobDescriptionToShow, setJobDescriptionToShow] = useState<string>(
+        job.description.substr(0, JOB_DESCRIPTION_DISPLAY_LENGTH_LIMIT),
+    );
+
+    useEffect(() => {
+        if (shouldDescriptionBeCut)
+            setJobDescriptionToShow(
+                descriptionBlockStatus === DescriptionBlockStatus.EXPANDED
+                    ? job.description.substr(0, JOB_DESCRIPTION_DISPLAY_LENGTH_LIMIT)
+                    : job.description,
+            );
+    }, [descriptionBlockStatus, shouldDescriptionBeCut]);
 
     return (
         <JobContainerDiv>
@@ -59,35 +75,48 @@ export default function JobCard({ job, onAccept, onDecline }: IJobCardProps) {
                     {job.category}
                 </JobCategoryDiv>
                 <JobIdDiv>
-                    JOB ID: <div>{job.id}</div>
+                    Job ID: <div>{job.id}</div>
                 </JobIdDiv>
                 {job.status === JobStatus.ACCEPTED && jobPriceDiv}
             </JobRowDiv>
-            {job.status === JobStatus.ACCEPTED && (
-                <JobRowDiv>
-                    <JobPhoneDiv>
-                        <IconDiv icon="phone" />
-                        {job.phoneNumber}
-                    </JobPhoneDiv>
-                    <JobEmailDiv>
-                        <IconDiv icon="mail" />
-                        {job.email}
-                    </JobEmailDiv>
-                </JobRowDiv>
-            )}
             <JobRowDiv>
-                <JobDescriptionDiv>{job.description}</JobDescriptionDiv>
+                {job.status === JobStatus.ACCEPTED && (
+                    <JobContactBlockDiv>
+                        <JobPhoneDiv>
+                            <IconDiv icon="phone" />
+                            <a href={`tel:${job.phoneNumber}`}>{job.phoneNumber}</a>
+                        </JobPhoneDiv>
+                        <JobEmailDiv>
+                            <IconDiv icon="mail" />
+                            <a href={`mailto:${job.email}`}>{job.email}</a>
+                        </JobEmailDiv>
+                    </JobContactBlockDiv>
+                )}
+                <JobDescriptionDiv>
+                    {jobDescriptionToShow}
+                    {shouldDescriptionBeCut && (
+                        <button
+                            type="button"
+                            onClick={() =>
+                                setDescriptionBlockStatus(curr =>
+                                    curr === DescriptionBlockStatus.COLLAPSED
+                                        ? DescriptionBlockStatus.EXPANDED
+                                        : DescriptionBlockStatus.COLLAPSED,
+                                )
+                            }>
+                            {descriptionBlockStatus ? 'Show more' : 'Show less'}
+                        </button>
+                    )}
+                </JobDescriptionDiv>
             </JobRowDiv>
             {job.status === JobStatus.INVITED && (
                 <JobRowDiv>
-                    <JobBtnControlDiv>
-                        <JobActionButton className={ButtonType.PRIMARY} onClick={onAccept}>
-                            ACCEPT
-                        </JobActionButton>
-                        <JobActionButton className={ButtonType.SECONDARY} onClick={onDecline}>
-                            DECLINE
-                        </JobActionButton>
-                    </JobBtnControlDiv>
+                    <JobActionButton className={ButtonType.PRIMARY} onClick={onAccept}>
+                        ACCEPT
+                    </JobActionButton>
+                    <JobActionButton className={ButtonType.SECONDARY} onClick={onDecline}>
+                        DECLINE
+                    </JobActionButton>
                     {jobPriceDiv}
                 </JobRowDiv>
             )}

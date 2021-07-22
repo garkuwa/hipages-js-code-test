@@ -1,5 +1,6 @@
 import { ExceptionFilter, Catch, ArgumentsHost, HttpException } from '@nestjs/common';
 import { Request, Response } from 'express';
+import { IErrorResponse } from 'src/models';
 
 @Catch(HttpException)
 export default class HttpExceptionFilter implements ExceptionFilter {
@@ -15,7 +16,7 @@ export default class HttpExceptionFilter implements ExceptionFilter {
             statusCode: status,
             timestamp: new Date().toISOString(),
             path: request.url,
-            message: (exception.getResponse() as any).message || exception.message,
+            message: (exception.getResponse() as IErrorResponse).message || exception.message,
         });
     }
 }
