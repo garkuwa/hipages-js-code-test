@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tabs should render Tabs with three tabs 1`] = `
+<div
+  className="sc-bdnxRM dsaolF"
+>
+  <div
+    className="sc-gtsrHT hnHYbc"
+  >
+    <div
+      className="sc-dlnjwi jgsURa"
+      data-testid="One"
+      onClick={[Function]}
+    >
+      One
+    </div>
+    <div
+      className="sc-dlnjwi hHTMSR"
+      data-testid="Two"
+      onClick={[Function]}
+    >
+      Two
+    </div>
+    <div
+      className="sc-dlnjwi hHTMSR"
+      data-testid="Three"
+      onClick={[Function]}
+    >
+      Three
+    </div>
+  </div>
+  <div
+    className="sc-hKFxyN bpCJQI"
+  >
+    One
+  </div>
+</div>
+`;

@@ -13,11 +13,11 @@ import { JobStatus } from 'src/models';
 import { UpdateResult } from 'typeorm';
 
 @Controller('jobs')
-export class CategoryController {
+export class JobController {
     constructor(private readonly jobService: JobService) {}
 
     @Get(':status')
-    getCategories(@Param('status') status: string): Promise<Job[]> {
+    getJobsByStatus(@Param('status') status: string): Promise<Job[]> {
         switch (status) {
             case JobStatus.NEW:
                 return this.jobService.getNewJobs();

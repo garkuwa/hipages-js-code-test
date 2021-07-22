@@ -18,6 +18,7 @@ module.exports = {
             'error',
             {
                 case: 'camelCase',
+                ignore: ['react-app-env.d.ts'],
             },
         ],
         'eol-last': ['error', 'always'],

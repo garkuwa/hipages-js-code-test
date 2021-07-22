@@ -43,6 +43,7 @@ export default function Tabs({
             <TabButtonContainerDiv>
                 {tabNames?.map((name, index) => (
                     <TabButtonDiv
+                        data-testid={name}
                         isActive={currentTabIndex === index}
                         onClick={() => changeTabs(index)}
                         key={name}>

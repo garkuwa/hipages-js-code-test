@@ -33,3 +33,20 @@ export const updateJobStatus = async (jobId: number, newStatus: JobStatus) => {
 
     return response.json();
 };
+
+const ACCEPTED_JOBS_MOCK = [
+    {
+        id: 2,
+        status: JobStatus.ACCEPTED,
+        price: '11',
+        description: 'second test',
+        name: 'Jabba',
+
+        suburb: 'Sydney',
+        category: 'Bathroom Renovation',
+        createdAt: new Date(),
+        setJoinedFields: null,
+        phoneNumber: '12345',
+        email: 'test@mail.com',
+    } as AcceptedJob,
+];

@@ -1,4 +1,5 @@
 export const formatDate = (input: string) => {
+    if (isNaN(Date.parse(input))) return '';
     const date = new Date(input);
     const monthAndYear = date.toLocaleString('en-au', {
         month: 'long',

@@ -13,7 +13,7 @@ export class JobService {
         @InjectRepository(AcceptedJob) private acceptedJobRepository: Repository<AcceptedJob>,
     ) {}
 
-    getNewJobs(): Promise<Job[]> {
+    getNewJobs(): Promise<NewJob[]> {
         return this.newJobRepository.find({
             where: {
                 status: JobStatus.NEW,
@@ -21,7 +21,7 @@ export class JobService {
         });
     }
 
-    getAcceptedJobs(): Promise<Job[]> {
+    getAcceptedJobs(): Promise<AcceptedJob[]> {
         return this.acceptedJobRepository.find({
             where: {
                 status: JobStatus.ACCEPTED,
