@@ -50,7 +50,7 @@ export default function JobCard({ job, onAccept, onDecline }: IJobCardProps) {
     useEffect(() => {
         if (shouldDescriptionBeCut)
             setJobDescriptionToShow(
-                descriptionBlockStatus === DescriptionBlockStatus.EXPANDED
+                descriptionBlockStatus === DescriptionBlockStatus.COLLAPSED
                     ? job.description.substr(0, JOB_DESCRIPTION_DISPLAY_LENGTH_LIMIT)
                     : job.description,
             );
@@ -104,7 +104,9 @@ export default function JobCard({ job, onAccept, onDecline }: IJobCardProps) {
                                         : DescriptionBlockStatus.COLLAPSED,
                                 )
                             }>
-                            {descriptionBlockStatus ? 'Show more' : 'Show less'}
+                            {descriptionBlockStatus === DescriptionBlockStatus.COLLAPSED
+                                ? 'Show more'
+                                : 'Show less'}
                         </button>
                     )}
                 </JobDescriptionDiv>
