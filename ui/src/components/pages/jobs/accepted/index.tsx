@@ -3,17 +3,12 @@ import { GENERIC_ERROR_MESSAGE } from 'config';
 import { useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { getJobs } from 'requests';
-import { DataRequestName, IJob, JobStatus } from 'types';
-
-interface AcceptedJobsContainerProps {
-    setIsLoadingState: (val: boolean) => void;
-    setSnackbarMessage: (val: string) => void;
-}
+import { DataRequestName, IJob, JobStatus, IJobContainerProps } from 'types';
 
 export default function AcceptedJobsContainer({
     setIsLoadingState,
     setSnackbarMessage,
-}: AcceptedJobsContainerProps) {
+}: IJobContainerProps) {
     const { isLoading, data, isError, error } = useQuery<IJob[], Error>(
         DataRequestName.ACCEPTED_JOBS,
         getJobs(JobStatus.ACCEPTED),

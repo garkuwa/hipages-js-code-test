@@ -28,3 +28,8 @@ export interface IServerErrorResponse {
     timestamp: string;
     path: string;
 }
+
+export interface IJobContainerProps {
+    setIsLoadingState: (val: boolean) => void;
+    setSnackbarMessage: (val: string) => void;
+}
