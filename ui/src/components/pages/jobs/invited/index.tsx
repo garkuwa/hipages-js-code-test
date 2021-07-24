@@ -33,6 +33,7 @@ export default function InvitedJobsContainer({
             status: JobStatus.ACCEPTED,
         });
     const declineJob = (jobId: number) => {
+        // Confirmation is needed because a user might decline a job accidentally
         if (globalThis.confirm(`Are you sure you want to decline the JOB with ID ${jobId}`)) {
             mutate({
                 jobId,
@@ -49,10 +50,17 @@ export default function InvitedJobsContainer({
         if (hasUpdateSucceeded) {
             setSnackbarMessage(GENERIC_SUCCESS_MESSAGE);
             refetch();
-        } else if (hasDataFetchingFailed)
+        }
+    }, [hasUpdateSucceeded]);
+
+    useEffect(() => {
+        if (hasDataFetchingFailed)
             setSnackbarMessage(dataFetchingError?.message || GENERIC_ERROR_MESSAGE);
-        else if (hasUpdateFailed) setSnackbarMessage(updateError?.message || GENERIC_ERROR_MESSAGE);
-    }, [hasDataFetchingFailed, hasUpdateSucceeded, hasUpdateFailed]);
+    }, [hasDataFetchingFailed]);
+
+    useEffect(() => {
+        if (hasUpdateFailed) setSnackbarMessage(updateError?.message || GENERIC_ERROR_MESSAGE);
+    }, [hasUpdateFailed]);
 
     return (
         <>

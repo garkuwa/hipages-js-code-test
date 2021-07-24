@@ -10,6 +10,7 @@ export default class HttpExceptionFilter implements ExceptionFilter {
         const request = ctx.getRequest<Request>();
         const status = exception.getStatus();
 
+        // In real life, this error would be logged to some storage
         console.error(exception.message, exception.stack, request.url);
 
         response.status(status).json({

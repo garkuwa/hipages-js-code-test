@@ -30,8 +30,9 @@ export class Job {
     /**
      * Front-end at the moment is not interested in suburb_id and category_id,
      * so there is no reason to include these fields in a response and have a nested structure.
-     * It seems typeorm doesn't provide a more elegant way to configure join columns
-     * or calculate these fields without using a query builder
+     * It seems a typeorm mysql driver doesn't provide a more elegant way to configure join columns
+     * or calculate these fields without using a query builder,
+     * which has a drawback of keeping all the field names in a SQL query string
      */
     @AfterLoad()
     setJoinedFields(): void {

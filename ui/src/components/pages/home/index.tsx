@@ -1,20 +1,19 @@
-import Tabs from 'components/shared';
+import Tabs from 'components/shared/tabs';
 import Snackbar from 'components/shared/snackbar';
-import { useEffect , useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useHistory, useLocation } from 'react-router-dom';
 import { parseQueryNumberParam } from 'utils';
+import { TAB_QUERY_PARAM_NAME } from 'config';
 import AcceptedJobsContainer from '../jobs/accepted';
 import InvitedJobsContainer from '../jobs/invited';
 import { HomeContainerDiv } from './styled';
-
-const TAB_QUERY_PARAM_NAME = 'tab';
 
 export default function HomeContainer() {
     const { search } = useLocation();
     const { push } = useHistory();
     const [currentTab, setCurrentTab] = useState<number>(
-        parseQueryNumberParam(search, TAB_QUERY_PARAM_NAME) ?? 0,
+        parseQueryNumberParam(search, TAB_QUERY_PARAM_NAME) || 0,
     );
     const onTabChange = (_: number, nextTab: number) => {
         push({
@@ -25,7 +24,7 @@ export default function HomeContainer() {
     const [snackbarMessage, setSnackbarMessage] = useState<string>();
 
     useEffect(() => {
-        setCurrentTab(parseQueryNumberParam(search, TAB_QUERY_PARAM_NAME) ?? 0);
+        setCurrentTab(parseQueryNumberParam(search, TAB_QUERY_PARAM_NAME) || 0);
     }, [search]);
 
     return (

@@ -15,5 +15,5 @@ export const parseQueryNumberParam = (search: string, paramName: string) => {
     const queryParams = new URLSearchParams(search);
     const param = queryParams.get(paramName);
 
-    return param && +param ? +param : undefined;
+    return param && +param ? +param : NaN;
 };

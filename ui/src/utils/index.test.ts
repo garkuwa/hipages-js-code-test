@@ -23,9 +23,9 @@ describe('parseQueryNumberParam', () => {
         expect(parseQueryNumberParam(query, 'param')).toBe(520);
     });
 
-    it('should return undefined if a parameter cannot be converted to a number', () => {
+    it('should return NaN if a parameter cannot be converted to a number', () => {
         const query = '?param=some_wrong_value';
 
-        expect(parseQueryNumberParam(query, 'param')).toBe(undefined);
+        expect(parseQueryNumberParam(query, 'param')).toBe(NaN);
     });
 });

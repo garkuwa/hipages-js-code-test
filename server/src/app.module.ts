@@ -8,6 +8,7 @@ const env = require('dotenv-flow').config({ silent: true });
 if (env.error) {
     throw env.error;
 }
+
 process.env = {
     ...process.env,
     // eslint-disable.env.d-next-line global-require
@@ -23,6 +24,7 @@ const dbConfig = {
     database: process.env.DB_DATABASE,
     entities: [Category, Suburb, Job, NewJob, AcceptedJob],
 } as TypeOrmModuleOptions;
+
 @Module({
     imports: [TypeOrmModule.forRoot(dbConfig), JobModule],
 })

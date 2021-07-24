@@ -101,7 +101,7 @@ export const JobPriceDiv = styled.div<{ isAccepted: boolean }>`
     }
 
     @media (max-width: 600px) {
-        margin: 10px 0 0 0;
+        margin: 10px 0 0 5px;
     }
 `;
 

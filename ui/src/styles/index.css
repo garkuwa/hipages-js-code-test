@@ -34,6 +34,7 @@ body {
     font-family: var(--font-family-regular);
     font-size: 100%;
     background-color: var(--color-body);
+    overflow: hidden;
 }
 
 a {
